@@ -1,0 +1,182 @@
+Section: misc
+Priority: optional
+Homepage: http://canaima.softwarelibre.gob.ve
+Standards-Version: 3.9.1
+
+Package: canaima-caribay-audio-conf
+Version: 0.1
+Maintainer: Ernesto Nadir Crespo Avila <ecrespo@cenditel.gob.ve>
+Pre-Depends: alsaplayer-jack, jackd, jackd2, jackd2-firewire,pulseaudio-module-jack, qjackctl, pulseaudio, pulseaudio-module-jack, pulseaudio-module-x11, pulseaudio-utils,debhelper (>= 8.0.0)
+Depends: ${misc:Depends}
+Architecture: all
+Copyright: copyright
+Changelog: changelog
+Files: files/rivendell.conf /etc/security/limits.d/rivendell.conf
+       files/.asoundrc      /etc/skel/.asoundrc
+       files/.jackdrc       /etc/skel/.jackdrc
+       files/QjackCtl.conf  /etc/skel/.config/rncbc.org/QjackCtl.conf
+       files/pulse-jack-post-start.sh   /etc/skel/scripts/pulse-jack-post-start.sh
+       files/pulse-jack-post-stop.sh    /etc/skel/scripts/pulse-jack-post-stop.sh
+       files/pulse-jack-pre-start.sh    /etc/skel/scripts/pulse-jack-pre-start.sh
+       files/pulse-jack-pre-stop.sh     /etc/skel/scripts/pulse-jack-pre-stop.sh
+File: postinst
+ #!/bin/sh -e
+ # preinst for main-package-config. Divert some configuration file of main-package.
+ .
+ set -e
+ .
+ PKG=canaima-radiotray-conf
+ .
+     if [ "$1" = configure ] ; then
+ .
+    for usuario in  /home/*? ; do
+ .
+        usuario_min=$(basename $usuario)
+ .
+        case $(grep "${usuario_min}:.*:.*:.*:.*:.*:::" /etc/shadow ) in
+ .
+                '')
+                #no se hace nada
+                ;;
+ .
+                *)
+                usuario=${usuario_min}
+ .
+                if [ -f  /home/${usuario}/.asoundrc ];
+ .
+                then
+ .
+                        cp -r /etc/skel/.asoundrc  /home/${usuario}/.asoundrc
+ .
+
+                else
+ .
+                        cp -r /etc/skel/.asoundrc  /home/${usuario}/
+ .
+                fi
+ .
+                chown ${usuario}.${usuario} /home/${usuario}/.asoundrc
+ .
+                if [ -f /home/${usuario}/.jackdrc ];
+ .
+                then
+ .
+                        cp -r /etc/skel/.jackdrc /home/${usuario}/.jackdrc
+ .
+                else
+ .
+                        cp -r /etc/skel/.jackdrc /home/${usuario}/
+ .
+                fi
+ .
+                chown ${usuario}.${usuario} /home/${usuario}/.jackdrc
+ .
+                if [ -d /home/${usuario}/scripts];
+ .          
+               then
+ .
+                       cp /etc/skel/scripts/* /home/${usuario}/scripts/
+ .
+               else
+ .
+                       mkdir -p /home/${usuario}/scripts
+ .
+                       cp /etc/skel/scripts/* /home/${usuario}/scripts/
+ .
+               fi
+ .
+               chown -R ${usuario}.${usuario} /home/${usuario}/scripts
+ .
+               if [ -d /home/${usuario}/.config/rncbc.org ];
+ .             
+               then
+ .
+                       mkdir -p /home/${usuario}/.config/rncbc.org
+ .                      
+                       cp /etc/skel/.config/rncbc.org/* /home/${usuario}/.config/rncbc.org/
+ .
+               else
+ .
+                       mkdir -p /home/${usuario}/.config/rncbc.org
+ .
+                       cp /etc/skel/.config/rncbc.org/* /home/${usuario}/.config/rncbc.org/
+ .
+               fi
+ .
+               chown -R ${usuario}.${usuario}  /home/${usuario}/.config/rncbc.org
+ .
+        esac
+ .
+    done
+ .
+     fi
+     #DEBHELPER#
+ .
+    exit 0
+File: prerm
+ #!/bin/sh -e
+ .
+ set -e
+ .
+ PKG=canaima-radiotray-conf
+ .
+    if [ "$1" = configure ] ; then
+ .
+        for usuario in  /home/*? ; do
+ .
+            usuario_min=$(basename $usuario)
+ .
+             case $(grep "${usuario_min}:.*:.*:.*:.*:.*:::" /etc/shadow ) in
+ .
+                '')
+                    #no se hace nada
+                    ;;
+ .
+                    *)
+                    usuario=${usuario_min}
+ .
+                    if [ -f  /home/${usuario}/.asoundrc ];
+ .
+                        then
+ .
+                            rm -f /home/${usuario}/.asoundrc
+ .
+                    fi
+ .
+                    if [ -f /home/${usuario}/.jackdrc ];
+ .
+                        then
+ .
+                            rm -f /home/${usuario}/.jackdrc
+ .
+                     fi
+ .
+                     if [ -d /home/${usuario}/.config/scripts ];
+ .	
+		        then
+ .
+			    rm -rf /home/${usuario}/.config/scripts
+ .
+			fi
+ .
+			if [ -d /home/${usuario}/.config/rncbc.org ];
+ .
+          	        then
+ .
+ 		            rm -rf /home/${usuario}/.config/rncbc.org
+ .
+			fi
+ .
+            esac
+ .
+        done
+ .
+    fi
+ .
+    #DEBHELPER#
+ .
+     exit 0
+     
+Description: Configuracion de audio que permite el uso de jackd 
+ Configuracion de audio que permite el uso de jack y pulseaudio
+ 
