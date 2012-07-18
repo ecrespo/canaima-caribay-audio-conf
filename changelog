@@ -1,0 +1,12 @@
+canaima-caribay-audio-conf (1:0.2) testing; urgency=low
+
+  * Fix create scripts directory in home's users
+
+ -- Ernesto Nadir Crespo Avila <ecrespo@cenditel.gob.ve>  Tue, 03 Jul 2012 15:35:21 -0430
+
+canaima-caribay-audio-conf (1:0.1) testing; urgency=low
+
+  * Initial release.
+
+ -- Ernesto Nadir Crespo Avila <ecrespo@cenditel.gob.ve>  Wed, 13 Jun 2012 15:49:16 -0430
+
