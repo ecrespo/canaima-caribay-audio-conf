@@ -42,6 +42,10 @@ File: postinst
                 *)
                 usuario=${usuario_min}
  .
+                addgroup ${usuario} audio
+ .
+                addgroup ${usuario} rivendell
+ .
                 if [ -f  /home/${usuario}/.asoundrc ];
  .
                 then
