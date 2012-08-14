@@ -4,7 +4,7 @@ Homepage: http://canaima.softwarelibre.gob.ve
 Standards-Version: 3.9.1
 
 Package: canaima-caribay-audio-conf
-Version: 0.4
+Version: 0.5
 Maintainer: Ernesto Nadir Crespo Avila <ecrespo@cenditel.gob.ve>
 Pre-Depends: alsaplayer-jack, jackd, jackd2, jackd2-firewire,pulseaudio-module-jack, qjackctl, pulseaudio, pulseaudio-module-jack, pulseaudio-module-x11, pulseaudio-utils,debhelper (>= 8.0.0),canaima-rivendell 
 Depends: ${misc:Depends}
