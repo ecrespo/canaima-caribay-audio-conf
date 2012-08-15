@@ -1,3 +1,16 @@
+canaima-caribay-audio-conf (1:0.5) testing; urgency=low
+
+  * fix files/pulse-jack-pre-start.sh.
+
+ -- Ernesto Nadir Crespo Avila <ecrespo@cenditel.gob.ve>  Tue, 14 Aug 2012 14:30:36 -0430
+
+canaima-caribay-audio-conf (1:0.4) testing; urgency=low
+
+  * Add root password to mysql.
+  * Fix block device between rivendell and jack.
+
+ -- Ernesto Nadir Crespo Avila <ecrespo@cenditel.gob.ve>  Tue, 14 Aug 2012 10:23:52 -0430
+
 canaima-caribay-audio-conf (1:0.3) testing; urgency=low
 
   * Add users in audio and rivendell group in postinst file.
